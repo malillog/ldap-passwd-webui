@@ -50,16 +50,17 @@
         <input id="username" name="username" value="{{.Username}}" type="text" required autofocus>
 
         <label for="old-password">Old password</label>
-        <input id="old-password" name="old-password" type="password" required>
+        <input id="old-password" name="old-password" type="password">
 
         <label for="new-password">New password</label>
         <input id="new-password" name="new-password" type="password"
-            pattern=".{8,}" x-moz-errormessage="Password must be at least 8 characters long." required>
+            pattern=".{2,}" x-moz-errormessage="Password must be at least 2 characters long." required>
 
         <label for="confirm-password">Confirm new password</label>
         <input id="confirm-password" name="confirm-password" type="password"
-            pattern=".{8,}" x-moz-errormessage="Password must be at least 8 characters long." required>
+            pattern=".{2,}" x-moz-errormessage="Password must be at least 2 characters long." required>
 
+		<!--
         <p>Type the numbers you see in the picture below:</p>
         <p>
           <img id=image src="/captcha/{{.CaptchaId}}.png" alt="Captcha image">
@@ -68,7 +69,8 @@
         <input type=hidden name=captchaId value="{{.CaptchaId}}">
         <br>
         <input id="captchaSolution" name="captchaSolution" type="text" required>
-        <button type="submit">Update password</button>
+		-->
+        <button type="submit">Submit</button>
       </form>
 
       <div class="alerts">

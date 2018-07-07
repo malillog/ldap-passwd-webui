@@ -8,7 +8,7 @@ import (
 
 	"html/template"
 
-	"github.com/dchest/captcha"
+	//"github.com/dchest/captcha"
 
 	"regexp"
 
@@ -61,7 +61,7 @@ func ServeAssets(w http.ResponseWriter, req *http.Request) {
 
 // ServeIndex : Serves index page on GET request
 func ServeIndex(w http.ResponseWriter, req *http.Request) {
-	p := &pageData{Title: getTitle(), CaptchaId: captcha.New()}
+	p := &pageData{Title: getTitle()}
 	t, e := template.ParseFiles(path.Join("templates", "index.html"))
 	if e != nil {
 		log.Printf("Error parsing file %v\n", e)
@@ -78,8 +78,8 @@ func ChangePassword(w http.ResponseWriter, req *http.Request) {
 	oldPassword := req.Form["old-password"]
 	newPassword := req.Form["new-password"]
 	confirmPassword := req.Form["confirm-password"]
-	captchaID := req.Form["captchaId"]
-	captchaSolution := req.Form["captchaSolution"]
+	//captchaID := req.Form["captchaId"]
+	//captchaSolution := req.Form["captchaSolution"]
 
 	alerts := map[string]string{}
 
@@ -102,11 +102,13 @@ func ChangePassword(w http.ResponseWriter, req *http.Request) {
 		alerts["error"] = "New and confirmation passwords does not match. "
 	}
 
-	if len(captchaID) < 1 || captchaID[0] == "" ||
-		len(captchaSolution) < 1 || captchaSolution[0] == "" ||
-		!captcha.VerifyString(captchaID[0], captchaSolution[0]) {
-		alerts["error"] = "Wrong captcha."
-	}
+	/*
+		if len(captchaID) < 1 || captchaID[0] == "" ||
+			len(captchaSolution) < 1 || captchaSolution[0] == "" ||
+			!captcha.VerifyString(captchaID[0], captchaSolution[0]) {
+			alerts["error"] = "Wrong captcha."
+		}
+	*/
 
 	if len(alerts) == 0 {
 		client := NewLDAPClient()
@@ -117,7 +119,7 @@ func ChangePassword(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	p := &pageData{Title: getTitle(), Alerts: alerts, Username: un, CaptchaId: captcha.New()}
+	p := &pageData{Title: getTitle(), Alerts: alerts, Username: un}
 
 	t, e := template.ParseFiles(path.Join("templates", "index.html"))
 	if e != nil {

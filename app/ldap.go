@@ -99,7 +99,10 @@ func (ls *LDAPClient) ModifyPassword(name, passwd, newPassword string) error {
 	if !ok {
 		return fmt.Errorf("Error sanitizing name %s", name)
 	}
-	bindUser(l, userDN, passwd)
+	e := bindUser(l, userDN, passwd)
+	if e != nil {
+		return fmt.Errorf("Error bindUser failed.")
+	}
 
 	log.Printf("\nLDAP will execute password change on: %s", userDN)
 	req := ldap.NewPasswordModifyRequest(userDN, passwd, newPassword)
