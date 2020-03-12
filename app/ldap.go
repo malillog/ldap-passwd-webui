@@ -49,7 +49,7 @@ func (ls *LDAPClient) sanitizedUserDN(username string) (string, bool) {
 		log.Printf("\n'%s' contains invalid DN characters. Aborting.", username)
 		return "", false
 	}
-
+	//TODO: Revisar aqui a ver si puedo agregar más plantillas
 	return fmt.Sprintf(ls.UserDN, username), true
 }
 
